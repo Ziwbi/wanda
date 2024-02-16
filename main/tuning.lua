@@ -48,7 +48,7 @@ for k,v in pairs({
     WANDA_WARP_DIST_YOUNG = 8,
 
     WHIP_RANGE = 2,
-    
+
     -- food affinity multipliers to add 15 calories
     AFFINITY_15_CALORIES_TINY = 2.6,
     AFFINITY_15_CALORIES_SMALL = 2.2,

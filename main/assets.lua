@@ -1,6 +1,6 @@
 GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
 
-PrefabFiles = 
+PrefabFiles =
 {
     "wanda",
     "pocketwatch",
@@ -11,7 +11,7 @@ PrefabFiles =
     "staffcastfx_wanda",
 }
 
-Assets = 
+Assets =
 {
     Asset("IMAGE", "bigportraits/wanda.tex"),
     Asset("ATLAS", "bigportraits/wanda.xml"),
@@ -21,9 +21,9 @@ Assets =
     Asset("ATLAS", "images/selectscreen_portraits/wanda.xml"),
     Asset("IMAGE", "images/selectscreen_portraits/wanda_silho.tex"),
     Asset("ATLAS", "images/selectscreen_portraits/wanda_silho.xml"),
-    Asset("IMAGE", "images/inventoryimages_3.tex"), 
+    Asset("IMAGE", "images/inventoryimages_3.tex"),
     Asset("ATLAS", "images/inventoryimages_3.xml"),
-    Asset("ATLAS_BUILD", "images/inventoryimages_3.xml", 256),  
+    Asset("ATLAS_BUILD", "images/inventoryimages_3.xml", 256),
     Asset("IMAGE", "images/map_icons/wanda.tex"),
     Asset("ATLAS", "images/map_icons/wanda.xml"),
     Asset("ATLAS", "images/hud/clocksmithy.xml"),
@@ -58,8 +58,8 @@ Assets =
     Asset("SCRIPT", "scripts/prefabs/player_common.lua"),
     Asset("SCRIPT", "scripts/prefabs/pocketwatch_common.lua"),
 
-    Asset("SOUNDPACKAGE", "sound/wanda2.fev" ),
-    Asset("SOUND", "sound/wanda2.fsb" ), 
+    Asset("SOUNDPACKAGE", "sound/wanda2.fev"),
+    Asset("SOUND", "sound/wanda2.fsb"),
 }
 
 RegisterInventoryItemAtlas("images/inventoryimages_3.xml", "pocketwatch_heal.tex")

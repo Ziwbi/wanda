@@ -1,5 +1,5 @@
 GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
-local Workable = require("components/Workable")
+local Workable = require("components/workable")
 
 local _WorkedBy = Workable.WorkedBy
 function Workable:WorkedBy(worker, numworks)

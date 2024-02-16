@@ -23,14 +23,14 @@ end
 
 local function ToggleOnPhysics(inst)
     inst.sg.statemem.isphysicstoggle = nil
-    inst.Physics:ClearCollisionMask() 
+    inst.Physics:ClearCollisionMask()
     if IsDLCEnabled(PORKLAND_DLC) then
         inst.Physics:CollidesWith(GetWorldCollision())
         inst.Physics:CollidesWith(GetWaterCollision())
         inst.Physics:CollidesWith(COLLISION.OBSTACLES)
         inst.Physics:CollidesWith(COLLISION.CHARACTERS)
         inst.Physics:CollidesWith(COLLISION.WAVES)
-        inst.Physics:CollidesWith(COLLISION.INTWALL)        
+        inst.Physics:CollidesWith(COLLISION.INTWALL)
     elseif IsDLCEnabled(CAPY_DLC) then
         inst.Physics:CollidesWith(COLLISION.WORLD)
         inst.Physics:CollidesWith(COLLISION.OBSTACLES)
@@ -59,7 +59,7 @@ local function TravelToLevel(inst, warpback_data, dest_worldid, recallmark, drop
 
     local function onentered()
         SetPause(true)
-        StartNextInstance({reset_action = RESET_ACTION.LOAD_SLOT, save_slot = SaveGameIndex:GetCurrentSaveSlot()}, true) 
+        StartNextInstance({reset_action = RESET_ACTION.LOAD_SLOT, save_slot = SaveGameIndex:GetCurrentSaveSlot()}, true)
         GetWorld():DoTaskInTime(0, function() GetPlayer().components.autosaver:DoSave() end)
     end
 
@@ -75,35 +75,35 @@ local function TravelToLevel(inst, warpback_data, dest_worldid, recallmark, drop
     inst:PushEvent("dropontravel")
     GetWorld():DoTaskInTime(0, function()
         TheFrontEnd:Fade(false, 3, function() onstartnextmode() end)
-    end)                      
+    end)
 end
 
 
-local actionhandlers = 
+local actionhandlers =
 {
-    ActionHandler(ACTIONS.CAST_POCKETWATCH, 
+    ActionHandler(ACTIONS.CAST_POCKETWATCH,
         function(inst, action)
             return action.invobject ~= nil
-                and action.invobject:HasTag("recall_unmarked") and "dolongaction" or 
-                    action.invobject:HasTag("pocketwatch_warp_casting") and "pocketwatch_warpback_pre"                
+                and action.invobject:HasTag("recall_unmarked") and "dolongaction" or
+                    action.invobject:HasTag("pocketwatch_warp_casting") and "pocketwatch_warpback_pre"
                 or "pocketwatch_cast"
         end),
 
     ActionHandler(ACTIONS.DISMANTLE_POCKETWATCH, "dolongaction"),
 
-    ActionHandler(ACTIONS.BUILD, 
+    ActionHandler(ACTIONS.BUILD,
         function(inst, action)
             if action.recipe and action.recipe == "livinglog" and action.doer and action.doer.prefab == "wormwood" then
                 return "form_log"
             elseif inst:HasTag("slowbuilder") then
                 return "dolongestaction"
-            else 
+            else
                 return "dolongaction"
             end
         end),
 }
 
-local events = 
+local events =
 {
     EventHandler("becomeyounger_wanda",
         function(inst)
@@ -122,8 +122,8 @@ local events =
     EventHandler("doattack", function(inst)
         if not inst.components.health:IsDead() and not inst.sg:HasStateTag("attack") then
             local weapon = inst.components.combat and inst.components.combat:GetWeapon()
-            if weapon and weapon:HasTag("goggles") then 
-                inst.sg:GoToState("goggleattack")                
+            if weapon and weapon:HasTag("goggles") then
+                inst.sg:GoToState("goggleattack")
             elseif weapon and weapon:HasTag("blowdart") then
                 inst.sg:GoToState("blowdart")
             elseif weapon and weapon:HasTag("thrown") then
@@ -137,7 +137,7 @@ local events =
     end)
 }
 
-local states = 
+local states =
 {
     State({
         name = "dolongestaction",
@@ -149,7 +149,7 @@ local states =
     State({
         name = "death",
         tags = {"busy"},
-        
+
         onenter = function(inst)
             inst.components.locomotor:Stop()
             inst.last_death_position = inst:GetPosition()
@@ -212,13 +212,13 @@ local states =
 
         onenter = function(inst)
             inst.components.locomotor:Stop()
-            inst.AnimState:PlayAnimation("useitem_pre") 
+            inst.AnimState:PlayAnimation("useitem_pre")
             inst.AnimState:PushAnimation("pocketwatch_cast", false)
             inst.AnimState:PushAnimation("useitem_pst", false)
 
             local buffaction = inst:GetBufferedAction()
             if buffaction ~= nil then
-                inst.AnimState:OverrideSymbol("watchprop", buffaction.invobject.build, "watchprop") 
+                inst.AnimState:OverrideSymbol("watchprop", buffaction.invobject.build, "watchprop")
                 inst.sg.statemem.castfxcolour = buffaction.invobject.castfxcolour
                 inst.sg.statemem.pocketwatch = buffaction.invobject
                 inst.sg.statemem.target = buffaction.target
@@ -260,7 +260,7 @@ local states =
             --failed timeline
             TimeEvent(28 * FRAMES, function(inst)
                 if inst.sg.statemem.action_failed then
-                    inst.AnimState:SetPercent("pocketwatch_cast", 34/inst.AnimState:GetCurrentAnimationLength()) 
+                    inst.AnimState:SetPercent("pocketwatch_cast", 34/inst.AnimState:GetCurrentAnimationLength())
                     -- inst.AnimState:SetFrame(34)
                     if inst.sg.statemem.stafffx ~= nil then
                         inst.sg.statemem.stafffx:Remove()
@@ -301,7 +301,7 @@ local states =
 
     State({
         name = "pocketwatch_warpback_pre",
-        tags = { "busy" },
+        tags = {"busy"},
 
         onenter = function(inst)
             inst.components.locomotor:Stop()
@@ -309,7 +309,7 @@ local states =
 
             local buffaction = inst:GetBufferedAction()
             if buffaction ~= nil then
-                inst.AnimState:OverrideSymbol("watchprop", buffaction.invobject.build, "watchprop") 
+                inst.AnimState:OverrideSymbol("watchprop", buffaction.invobject.build, "watchprop")
 
                 inst.sg.statemem.castfxcolour = buffaction.invobject.castfxcolour
             end
@@ -317,7 +317,7 @@ local states =
 
         timeline=
         {
-            TimeEvent(1*FRAMES, function(inst) inst.SoundEmitter:PlaySound("wanda2/characters/wanda/watch/warp") end),
+            TimeEvent(1 * FRAMES, function(inst) inst.SoundEmitter:PlaySound("wanda2/characters/wanda/watch/warp") end),
         },
 
         events =
@@ -344,13 +344,13 @@ local states =
 
     State({
         name = "pocketwatch_warpback",
-        tags = { "busy", "pausepredict", "nodangle", "nomorph", "jumping" },
+        tags = {"busy", "nodangle", "nomorph", "jumping"},
 
         onenter = function(inst, data)
             inst.components.locomotor:Stop()
             inst.AnimState:PlayAnimation("pocketwatch_warp")
 
-            inst.sg.statemem.warpback_data = data.warpback 
+            inst.sg.statemem.warpback_data = data.warpback
             inst.sg.statemem.castfxcolour = data.castfxcolour
 
             inst.sg.statemem.stafffx = SpawnPrefab("pocketwatch_warpback_fx")
@@ -370,7 +370,7 @@ local states =
                 local warpback_data = inst.sg.statemem.warpback_data
                 local x, y, z = inst.Transform:GetWorldPosition()
                 if (warpback_data.dest_worldid == nil or warpback_data.dest_worldid == _G.SaveGameIndex:GetCurrentMode()) and VecUtil_DistSq(x, z, warpback_data.dest_x, warpback_data.dest_z) > 30*30 then
-                    inst.sg.statemem.snap_camera = true 
+                    inst.sg.statemem.snap_camera = true
                     _G.TheFrontEnd:Fade(false, .5)
 
                 end
@@ -398,11 +398,11 @@ local states =
                 local dest_worldid = warpback_data.dest_worldid
                 local recallmark = warpback_data.recallmark
                 inst.sg.statemem.portaljumping = true
-                if dest_worldid ~= nil and not recallmark:IsMarkedForSameShard() then                    
+                if dest_worldid ~= nil and not recallmark:IsMarkedForSameShard() then
                     if _G.SaveGameIndex:HasWorld(recallmark.save_slot, recallmark.level_mode) then
                         inst:StartThread(function()
                             inst.components.autosaver:DoSave()
-                            TravelToLevel(inst, warpback_data, dest_worldid, recallmark, "irreplaceable")                        
+                            TravelToLevel(inst, warpback_data, dest_worldid, recallmark, "irreplaceable")
                         end)
 
                     else
@@ -438,7 +438,7 @@ local states =
 
     State({
         name = "pocketwatch_warpback_pst",
-        tags = { "busy", "nopredict", "nomorph", "noattack", "nointerrupt", "jumping" },
+        tags = {"busy", "nomorph", "noattack", "nointerrupt", "jumping"},
 
         onenter = function(inst, data)
             ToggleOffPhysics(inst)
@@ -511,7 +511,7 @@ local states =
 
     State({
         name = "attack_whip",
-        tags = { "attack", "notalking", "abouttoattack", "autopredict" },
+        tags = {"attack", "notalking", "abouttoattack"},
 
         onenter = function(inst)
             if inst.components.combat:InCooldown() then
@@ -523,14 +523,14 @@ local states =
             if inst.sg.laststate == inst.sg.currentstate then
                 inst.sg.statemem.chained = true
             end
-            
+
             local equip = inst.components.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
             local target = inst.components.combat.target
             inst.components.combat:StartAttack()
             inst.components.locomotor:Stop()
             local cooldown = inst.components.combat.min_attack_period
 
-            if equip ~= nil and equip:HasTag("pocketwatch") then
+            if equip and equip:HasTag("pocketwatch") then
                 inst.AnimState:PlayAnimation(inst.sg.statemem.chained and "pocketwatch_atk_pre_2" or "pocketwatch_atk_pre" )
                 inst.AnimState:PushAnimation("pocketwatch_atk", false)
                 inst.sg.statemem.ispocketwatch = true
@@ -551,7 +551,7 @@ local states =
 
             inst.sg:SetTimeout(cooldown)
 
-            if target ~= nil then
+            if target then
                 inst.components.combat:BattleCry()
                 if target:IsValid() then
                     inst:FacePoint(target:GetPosition())
@@ -565,12 +565,12 @@ local states =
         {
             TimeEvent(10 * FRAMES, function(inst)
                 if inst.sg.statemem.ispocketwatch then
-                    local target = inst.components.combat.target 
+                    local target = inst.components.combat.target
                     inst.components.combat:DoAttack(target)
                     inst.sg:RemoveStateTag("abouttoattack")
                 end
             end),
-            TimeEvent(17*FRAMES, function(inst)
+            TimeEvent(17 * FRAMES, function(inst)
                 if inst.sg.statemem.ispocketwatch then
                     inst.SoundEmitter:PlaySound(inst.sg.statemem.ispocketwatch_fueled and "wanda2/characters/wanda/watch/weapon/pst_shadow" or "wanda2/characters/wanda/watch/weapon/pst")
                 end
@@ -604,14 +604,14 @@ local states =
     State({
         name = "funnyidle",
         tags = {"idle", "canrotate"},
-        onenter = function(inst)    
+        onenter = function(inst)
             if inst.components.temperature:GetCurrent() < 5 then
                 inst.AnimState:PlayAnimation("idle_shiver_pre")
                 inst.AnimState:PushAnimation("idle_shiver_loop")
                 inst.AnimState:PushAnimation("idle_shiver_pst", false)
-            elseif inst.components.hunger:GetPercent() < _G.TUNING.HUNGRY_THRESH then
+            elseif inst.components.hunger:GetPercent() < TUNING.HUNGRY_THRESH then
                 inst.AnimState:PlayAnimation("hungry")
-                inst.SoundEmitter:PlaySound("dontstarve/wilson/hungry")    
+                inst.SoundEmitter:PlaySound("dontstarve/wilson/hungry")
             elseif inst.components.sanity:GetPercent() < .5 then
                 inst.AnimState:PlayAnimation("idle_inaction_sanity")
             else
@@ -619,19 +619,19 @@ local states =
             end
         end,
 
-        events=
+        events =
         {
             EventHandler("animqueueover", function(inst) inst.sg:GoToState("idle") end ),
         }
     }),
 }
 
-for k,v in ipairs(states) do
+for k, v in ipairs(states) do
     AddStategraphState("wilson", v)
 end
-for k,v in ipairs(events) do
+for k, v in ipairs(events) do
     AddStategraphEvent("wilson", v)
 end
-for k,v in ipairs(actionhandlers) do
+for k, v in ipairs(actionhandlers) do
     AddStategraphActionHandler("wilson", v)
 end

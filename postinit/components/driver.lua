@@ -1,4 +1,8 @@
 GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+if not IsDLCEnabled(CAPY_DLC) or IsDLCEnabled(PORKLAND_DLC) then
+    return
+end
+
 local Driver = require("components/driver")
 
 local _OnUpdate = Driver.OnUpdate

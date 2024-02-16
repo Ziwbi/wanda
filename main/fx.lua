@@ -136,6 +136,6 @@ local wanda_fx =
 }
 
 local fx = require("fx")
-for _,v in pairs(wanda_fx) do -- This could be optimised
+for _, v in pairs(wanda_fx) do -- This could be optimised
     table.insert(fx, v)
 end

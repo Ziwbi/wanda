@@ -13,7 +13,7 @@ local function SetUp(inst, colour)
     inst.AnimState:SetMultColour(colour[1], colour[2], colour[3], 1)
 end
 
-local function MakeStaffFX(anim, build, bank)
+local function MakeStaffFX(anim, build, bank, is_mount)
     return function()
         local inst = CreateEntity()
 
@@ -22,7 +22,11 @@ local function MakeStaffFX(anim, build, bank)
 
         inst:AddTag("FX")
 
-        inst.Transform:SetFourFaced()
+        if is_mount then
+            inst.Transform:SetSixFaced()
+        else
+            inst.Transform:SetFourFaced()
+        end
 
         inst.AnimState:SetBank(bank or "staff_fx")
         inst.AnimState:SetBuild(build or "staff")
@@ -42,6 +46,6 @@ end
 
 return 
 	Prefab("pocketwatch_cast_fx", MakeStaffFX("pocketwatch_cast", "pocketwatch_casting_fx", "pocketwatch_cast_fx"), assets_pocketwatch),
-	Prefab("pocketwatch_cast_fx_mount", MakeStaffFX("pocketwatch_cast", "pocketwatch_casting_fx_mount", "pocketwatch_casting_fx_mount"), assets_pocketwatch),
+	Prefab("pocketwatch_cast_fx_mount", MakeStaffFX("pocketwatch_cast", "pocketwatch_casting_fx_mount", "pocketwatch_casting_fx_mount", true), assets_pocketwatch),
 	Prefab("pocketwatch_warpback_fx", MakeStaffFX("warpfx", "pocketwatch_warp_casting_fx", "pocketwatch_warp_casting_fx"), assets_pocketwatch_warp),
 	Prefab("pocketwatch_warpbackout_fx", MakeStaffFX("warpfx_pst", "pocketwatch_warp_casting_fx", "pocketwatch_warp_casting_fx"), assets_pocketwatch_warp)
