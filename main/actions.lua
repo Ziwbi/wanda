@@ -1,4 +1,4 @@
-GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+GLOBAL.setfenv(1, GLOBAL)
 
 local function FunctionOrValue(func_or_val, ...)
     if type(func_or_val) == "function" then

@@ -369,9 +369,9 @@ local states =
             TimeEvent(4 * FRAMES, function(inst)
                 local warpback_data = inst.sg.statemem.warpback_data
                 local x, y, z = inst.Transform:GetWorldPosition()
-                if (warpback_data.dest_worldid == nil or warpback_data.dest_worldid == _G.SaveGameIndex:GetCurrentMode()) and VecUtil_DistSq(x, z, warpback_data.dest_x, warpback_data.dest_z) > 30*30 then
+                if (warpback_data.dest_worldid == nil or warpback_data.dest_worldid == SaveGameIndex:GetCurrentMode()) and VecUtil_DistSq(x, z, warpback_data.dest_x, warpback_data.dest_z) > 30*30 then
                     inst.sg.statemem.snap_camera = true
-                    _G.TheFrontEnd:Fade(false, .5)
+                    TheFrontEnd:Fade(false, .5)
 
                 end
             end),
@@ -399,7 +399,7 @@ local states =
                 local recallmark = warpback_data.recallmark
                 inst.sg.statemem.portaljumping = true
                 if dest_worldid ~= nil and not recallmark:IsMarkedForSameShard() then
-                    if _G.SaveGameIndex:HasWorld(recallmark.save_slot, recallmark.level_mode) then
+                    if SaveGameIndex:HasWorld(recallmark.save_slot, recallmark.level_mode) then
                         inst:StartThread(function()
                             inst.components.autosaver:DoSave()
                             TravelToLevel(inst, warpback_data, dest_worldid, recallmark, "irreplaceable")
@@ -419,9 +419,9 @@ local states =
         onexit = function(inst)
             if inst.sg.statemem.snap_camera then
                 inst:StartThread(function()
-                    _G.TheCamera:SetCustomLocation(_G.Point(warpback_data.dest_x, warpback_data.dest_y, warpback_data.dest_z))
-                    _G.Sleep(.5)
-                    _G.TheFrontEnd:Fade(true, .5)
+                    TheCamera:SetCustomLocation(Point(warpback_data.dest_x, warpback_data.dest_y, warpback_data.dest_z))
+                    Sleep(.5)
+                    TheFrontEnd:Fade(true, .5)
                 end)
 
             end
@@ -450,9 +450,9 @@ local states =
 
             if data.queued_snap_camera then
                 inst:StartThread(function()
-                    _G.TheCamera:SetDefault()
-                    _G.Sleep(.5)
-                    _G.TheFrontEnd:Fade(true, .5)
+                    TheCamera:SetDefault()
+                    Sleep(.5)
+                    TheFrontEnd:Fade(true, .5)
                 end)
             end
 

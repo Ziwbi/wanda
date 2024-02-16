@@ -1,4 +1,4 @@
-GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+GLOBAL.setfenv(1, GLOBAL)
 if not IsDLCEnabled(CAPY_DLC) or IsDLCEnabled(PORKLAND_DLC) then
     return
 end

@@ -1,13 +1,12 @@
-GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+GLOBAL.setfenv(1, GLOBAL)
 
 local wilson_attack = 34
-local wilson_sanity = 200
 
 for k,v in pairs({
     WANDA_OLDAGER = 60, -- 20 to 80 yo
     OLDAGE_HEALTH_SCALE = 60/150, -- WANDA_OLDAGER / WILSON_HEALTH
     WANDA_HUNGER = 175,
-    WANDA_SANITY = wilson_sanity,
+    WANDA_SANITY = 200,
 
     WANDA_MIN_YEARS_OLD = 20,
     WANDA_MAX_YEARS_OLD = 80,

@@ -1,4 +1,4 @@
-GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+GLOBAL.setfenv(1, GLOBAL)
 local Eater = require("components/eater")
 
 function Eater:DoFoodEffects(food)

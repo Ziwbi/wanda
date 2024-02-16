@@ -1,4 +1,5 @@
-GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+local AddPrefabPostInit = AddPrefabPostInit
+GLOBAL.setfenv(1, GLOBAL)
 
 local function onbuilt(inst)
     GetPlayer():PushEvent("effigy_activate")

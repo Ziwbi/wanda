@@ -1,7 +1,8 @@
-GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+local AddPrefabPostInit = AddPrefabPostInit
+GLOBAL.setfenv(1, GLOBAL)
 
 AddPrefabPostInit("skeleton_player", function(inst)
-    if GetPlayer().prefab == "wanda" then 
+    if GetPlayer().prefab == "wanda" then
         inst:Hide()
         inst:AddTag("NOBLOCK")
         inst.persists = false

@@ -38,7 +38,7 @@ end
 
 function RecallMark:IsTargetLevelRegenerated()
 	local target_level_iteration = SaveGameIndex.data.slots[self.save_slot or SaveGameIndex.current_slot].modes[self.level_mode].world or 1
-    return recallmark.level_iteration ~= target_level_iteration
+    return self.level_iteration ~= target_level_iteration
 end
 
 function RecallMark:IsMarkedForSameShard()
@@ -73,7 +73,7 @@ function RecallMark:OnSave()
 end
 
 function RecallMark:OnLoad(data)
-	if data ~= nil and data.recall_level_mode ~= nil then
+	if data and data.recall_level_mode then
 		self:MarkPosition(data.recall_x, data.recall_y, data.recall_z, data.recall_level_mode, data.cavenum, data.cavelevel, data.slot, data.iteration)
 	end
 end

@@ -1,4 +1,5 @@
-GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+local AddPrefabPostInit = AddPrefabPostInit
+GLOBAL.setfenv(1, GLOBAL)
 
 local function wanda_dapperfn(inst, owner)
     -- dappermess component from base game

@@ -1,4 +1,4 @@
-GLOBAL.setmetatable(env,{__index=function(t,k) return GLOBAL.rawget(GLOBAL,k) end})
+GLOBAL.setfenv(1, GLOBAL)
 
 STRINGS.CHARACTER_TITLES.wanda = "The Timekeeper"
 STRINGS.CHARACTER_NAMES.wanda = "Wanda"
