@@ -1,6 +1,4 @@
---- TODO: use dir function
-
-local components = {
+local component_postinits = {
     "builder",
     "edible",
     "eater",
@@ -10,13 +8,9 @@ local components = {
     "workable",
 }
 
-for _, component in pairs(components) do
-    modimport(string.format("postinit/components/%s.lua", component))
-end
 
-local prefabs = {
+local prefab_postinits = {
     "amulet",
-    "living_artifact",
     "player",
     "resurrectionstatue",
     "shadow_item",
@@ -25,32 +19,36 @@ local prefabs = {
     "waterdrop",
 }
 
-for _, prefab in pairs(prefabs) do
-    modimport(string.format("postinit/prefabs/%s.lua", prefab))
-end
-
 local sim_postinits = {
     "saveindex",
 }
 
-for _, sim_posinit in pairs(sim_postinits) do
-    modimport(string.format("postinit/sim/%s.lua", sim_posinit))
-end
-
-local stategraphs = {
+local stategraph_postinits = {
     "wilson",
     "wilsonboating"
 }
 
-for _, stategraph in pairs(stategraphs) do
-    modimport(string.format("postinit/stategraphs/SG%s.lua", stategraph))
-end
-
-local widgets = {
+local widget_postinits = {
     "itemtile",
     "statusdisplay",
 }
 
-for _, widget in pairs(widgets) do
-    modimport(string.format("postinit/widgets/%s.lua", widget))
+for _, component_postinit in pairs(component_postinits) do
+    modimport("postinit/components/" .. component_postinit ..  ".lua")
+end
+
+for _, prefab_postinit in pairs(prefab_postinits) do
+    modimport("postinit/prefabs/" .. prefab_postinit .. ".lua")
+end
+
+for _, sim_posinit in pairs(sim_postinits) do
+    modimport("postinit/sim/" .. sim_posinit .. ".lua")
+end
+
+for _, stategraph_postinit in pairs(stategraph_postinits) do
+    modimport("postinit/stategraphs/SG" .. stategraph_postinit .. ".lua")
+end
+
+for _, widget_postinit in pairs(widget_postinits) do
+    modimport("postinit/widgets/" .. widget_postinit .. ".lua")
 end

@@ -5,7 +5,7 @@ author = "ziwbi"
 
 
 api_version = 6
-version = "2.0.5"
+version = "2.1.0"
 priority = 10
 
 configuration_options = {

@@ -6,8 +6,7 @@ local Text = require "widgets/text"
 local UIAnim = require "widgets/uianim"
 local ItemTile = require("widgets/itemtile")
 
-local actual_name = LOC.GetLocaleCode() == "zh" and "[DST]旺达" or "[DST]Wanda"
-local should_display_timer = GetModConfigData("timer", modname) -- KnownModIndex:GetModActualName(actual_name))
+local should_display_timer = GetModConfigData("timer", modname)
 
 -----Cooldown Display-----
 function ItemTile:UpdateTimer()
