@@ -1,3 +1,4 @@
+local AddAction = AddAction
 GLOBAL.setfenv(1, GLOBAL)
 
 local function FunctionOrValue(func_or_val, ...)
